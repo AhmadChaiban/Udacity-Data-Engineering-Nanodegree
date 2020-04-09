@@ -19,3 +19,26 @@ Since the analytics team would like to understand what songs users are listening
 #### 2. State and justify your database schema design and ETL pipeline.
 
 The team needs to do fast aggregations on large amounts of data. For this reason, the Star Schema was chosen to be denormalized, as this allows for fast aggregations and simplified queries. The ETL pipeline is also there to move the data into the existing data model, which justifies its use. 
+
+
+## File guide: 
+
+#### 1. sql_queries.py 
+
+This file Here constains all the SQL queries that will CREATE, INSERT, and SELECT from the Fact and Dimension tables.
+
+#### 2. create_tables.py
+
+This file will actually run the CREATE queries in **sql_queries.py** and create the fact and dimesion tables. They will however be empty at this stage
+
+#### 3. etl.ipynb 
+
+Here, a test run is made on the main ETL pipeline, just to see how the data in the SQL tables are being INSERTED. This is done through using pandas to manipulate the dataframes and observe them beforehand. 
+
+#### 4. etl.py 
+
+This file is the final file that runs the script on all the records, and inserting all the correct data into the fact/dimension tables. 
+
+#### 5. test.ipynb
+
+Use this file to select from the created tables and confirm that the work above has been done correctly. 

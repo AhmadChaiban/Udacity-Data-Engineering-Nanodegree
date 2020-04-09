@@ -6,6 +6,13 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    
+    """
+    This function takes a file from the song_data directory and inserts specific information in both 
+    the songs and artists tables. 
+    
+    """
+    
     # open song file
     df = pd.read_json(filepath, lines = True)
 
@@ -19,6 +26,13 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    
+    """
+    This function takes a file from the log_data directory and inserts specific information in both 
+    the time and users tables. 
+    
+    """
+    
     # open log file
     df = pd.read_json(filepath, lines = True) 
 
@@ -26,12 +40,13 @@ def process_log_file(cur, filepath):
     df = df[df['page'] == 'NextSong' ]
 
     # convert timestamp column to datetime
-    t = pd.to_datetime(df['ts'])
+    t = pd.to_datetime(df['ts'], unit = 'ms')
+    df['ts'] = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
-    time_data = (df['ts'], t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday)
+    time_data = (t, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday)
     column_labels = ('ts', 'hour', 'day', 'week', 'month', 'year', 'weekday')
-    time_df = pd.DataFrame(list(time_data), index = column_labels).transpose()
+    time_df = pd.DataFrame(dict(zip(column_labels, time_data)))
 
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))
@@ -61,6 +76,12 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    
+    """
+    This function takes files from specific directories and will in this case process (as func)
+    either process_song_file or process_log_file on each file in the directory. 
+    
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -80,6 +101,13 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    
+    """
+    Here the main function makes a connection to the localhost, builds the cursor, and processes all the data 
+    by putting it in the database
+    
+    """
+    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
