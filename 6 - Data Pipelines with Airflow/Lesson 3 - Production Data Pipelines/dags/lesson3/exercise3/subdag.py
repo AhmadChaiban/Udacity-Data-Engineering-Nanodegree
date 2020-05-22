@@ -52,10 +52,19 @@ def get_s3_to_redshift_dag(
     #
     # TODO: Move the HasRowsOperator task here from the DAG
     #
-
+    
+    check_task = HasRowsOperator(
+        task_id=f"check_{table}_data",
+        dag=dag,
+        redshift_conn_id=redshift_conn_id,
+        table=table
+    )
+    
     create_task >> copy_task
+    copy_task >> check_task
     #
     # TODO: Use DAG ordering to place the check task
     #
-
+    
+    
     return dag
