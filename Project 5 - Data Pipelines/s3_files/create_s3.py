@@ -7,9 +7,8 @@ import configparser
 
 
 def get_key_secret():
-    
     """
-        Getting key and secret from the config fiels
+        Getting key and secret from the config fields
         
         :return: AWS Access key id, 
                  AWS secrety access key
@@ -17,7 +16,6 @@ def get_key_secret():
     
     config = configparser.ConfigParser()
     config.read('../dl.cfg')
-
     KEY = config['AWS']['AWS_ACCESS_KEY_ID']
     SECRET = config['AWS']['AWS_SECRET_ACCESS_KEY']
     return KEY, SECRET
@@ -96,9 +94,9 @@ def upload_file_s3(file_name, bucket):
 
     # If S3 object_name was not specified, use file_name    
     try:
-        response = s3_client.upload_file(file_name.replace('./',''), 
+        response = s3_client.upload_file(file_name,
                                          bucket, 
-                                         file_name.replace('./',''))
+                                         file_name.replace('../',''))
         print("Uploaded " + file_name)
     except ClientError as e:
         print("Failed to upload " + file_name)
@@ -126,9 +124,9 @@ def upload_files_s3(files, bucket):
     print('************************************')
     print('Upload complete')
     print('************************************')
-    
         
-        
+
+
 if __name__ == '__main__':
     
     KEY, SECRET = get_key_secret()
@@ -138,7 +136,7 @@ if __name__ == '__main__':
                               SECRET,
                               'us-west-2')
     
-    log_files_list, song_files_list = get_data_files('./ExtractedData')
+    log_files_list, song_files_list = get_data_files('../ExtractedData')
     
     upload_files_s3(log_files_list, 
                     'udacity-data-pipeline-project-2187')

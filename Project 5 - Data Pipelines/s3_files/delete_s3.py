@@ -43,5 +43,5 @@ def delete_all(s3_resource, s3_client, bucket_name):
 if __name__ == '__main__':
     KEY, SECRET = get_key_secret()
     s3_resource, s3_client = get_s3('us-west-2', KEY, SECRET)
-    delete_all(s3_resource, s3_client, 'udacity-data-lake-project-2187')
+    delete_all(s3_resource, s3_client, 'udacity-data-pipeline-project-2187')
     
