@@ -15,7 +15,7 @@ def get_key_secret():
     """
     
     config = configparser.ConfigParser()
-    config.read('../dl.cfg')
+    config.read('dl.cfg')
     KEY = config['AWS']['AWS_ACCESS_KEY_ID']
     SECRET = config['AWS']['AWS_SECRET_ACCESS_KEY']
     return KEY, SECRET
