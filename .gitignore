@@ -9,3 +9,5 @@ Project 2 - Data Modeling with Apache Cassandra/*json
 *.cfg
 
 Project 5 - Data Pipelines/s3_files/__pycache__/
+
+Project 5 - Data Pipelines/redshift/__pycache__/
