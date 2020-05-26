@@ -2,8 +2,7 @@ import boto3
 from botocore.exceptions import ClientError
 import time
 import json
-from config_details import get_cluster_details
-
+from config_details import get_cluster_details, add_endpoint_cluster
 
 def user_feedback(message):
     print('***************************************')
@@ -163,6 +162,7 @@ if __name__=='__main__':
                                                                          DWH_DB_PASSWORD,
                                                                          roleArn,
                                                                          redshift)
+    add_endpoint_cluster(DWH_ENDPOINT)
 
     vpc_endpoint(myClusterProps, DWH_PORT, ec2)
 

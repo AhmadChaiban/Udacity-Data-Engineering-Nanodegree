@@ -27,3 +27,20 @@ def get_cluster_details():
     return KEY, SECRET, DWH_CLUSTER_TYPE, DWH_NUM_NODES, \
            DWH_NODE_TYPE, DWH_CLUSTER_IDENTIFIER, DWH_DB, \
            DWH_DB_USER, DWH_DB_PASSWORD, DWH_PORT, DWH_IAM_ROLE_NAME
+
+
+def add_endpoint_cluster(endpoint):
+    config = configparser.RawConfigParser()
+    config.read_file(open('dwh.cfg'))
+    config.set('DWH', 'DWH_ENDPOINT', endpoint)
+    with open('dwh.cfg', 'w') as configfile:
+        config.write(configfile)
+
+
+def get_endpoint():
+    config = configparser.ConfigParser()
+    config.read_file(open('dwh.cfg'))
+
+    endpoint = config.get('DWH', 'DWH_ENDPOINT')
+    return endpoint
+
