@@ -30,6 +30,10 @@ def get_cluster_details():
 
 
 def add_endpoint_cluster(endpoint):
+    """
+    :param endpoint: redshift cluster endpoint
+    :return: None, writing to config file
+    """
     config = configparser.RawConfigParser()
     config.read_file(open('dwh.cfg'))
     config.set('DWH', 'DWH_ENDPOINT', endpoint)
@@ -38,6 +42,9 @@ def add_endpoint_cluster(endpoint):
 
 
 def get_endpoint():
+    """
+    :return: Cluster endpoint from config file
+    """
     config = configparser.ConfigParser()
     config.read_file(open('dwh.cfg'))
 
