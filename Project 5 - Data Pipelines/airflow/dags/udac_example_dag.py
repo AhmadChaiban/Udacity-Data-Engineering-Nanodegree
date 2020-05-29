@@ -34,12 +34,24 @@ start_operator = DummyOperator(
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
-    dag=dag
+    dag=dag,
+    table='staging_events',
+    s3_bucket = '',
+    s3_key = '',
+    delimiter = '',
+    ignore_headers = '',
+    aws_credentials_id = ''
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
-    dag=dag
+    dag=dag,
+    table='staging_songs',
+    s3_bucket = '',
+    s3_key = '',
+    delimiter = '',
+    ignore_headers = '',
+    aws_credentials_id = ''
 )
 
 load_songplays_table = LoadFactOperator(
