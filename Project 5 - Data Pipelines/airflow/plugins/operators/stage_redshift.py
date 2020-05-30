@@ -16,13 +16,13 @@ class StageToRedshiftOperator(BaseOperator):
 
     @apply_defaults
     def __init__(self,
-                 table,
-                 redshift_conn_id,
-                 s3_bucket,
-                 s3_key,
-                 delimiter,
-                 ignore_headers,
-                 aws_credentials_id,
+                 table ='',
+                 redshift_conn_id='',
+                 s3_bucket='',
+                 s3_key='',
+                 delimiter = '',
+                 ignore_headers='',
+                 aws_credentials_id='',
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -35,6 +35,14 @@ class StageToRedshiftOperator(BaseOperator):
         self.aws_credentials_id = aws_credentials_id
 
     def execute(self, context):
+        """
+        Copying the data from the s3 bucket to the redshift cluster's
+        respective tables.
+
+        The operator allows for specifying different tables, delimiter,
+        s3 buckets, and credentials.
+
+        """
         self.log.info('Commencing Hook to AWS')
         aws_hook = AwsHook(self.aws_credentials_id)
         credentials = aws_hook.get_credentials()
